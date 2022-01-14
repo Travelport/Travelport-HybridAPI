@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - API Hybrid Flow</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="p-0">
+    <nav class="navbar navbar-light navbar-expand-lg navbar bg-primary">
+        <a class="navbar-brand" href="./"><img src="~/Content/Images/TRAVELPORT_LOGO_RGB_Soft Black.svg" width="150" alt="Travelport"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "nav-item active" : "nav-item")">
+                    @Html.ActionLink("JSON/XML Hybrid Flow", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
+                </li>
+            
+                <li>
+                    <span class="nav-link">Hello!</span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Technology Optimization</p>
+        </footer>
+    </div>        
+    
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/gijgo")
+    @Scripts.Render("~/bundles/prismjs")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

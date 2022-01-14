@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>JSON XML Hybird Flow</h2>
+<h5>[Search+] in JSON API & [AirPrice] XML API</h5>
+
+<div class="row pt-1">
+    <div class="col-md-12 container-fluid">
+
+        <div class="container" data-request-url='@Url.Action("ExecuteSearchPlus", "Home")' id="requestForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <div class="btn-group btn-group-toggle mb-2" data-toggle="buttons" id="tripType">
+                        <label class="btn btn-light active">
+                            <input type="radio" name="options" id="optnOneWay" value="OneWayTrip" autocomplete="off" onclick="HideReturnDate()" checked> One Way
+                        </label>
+                        <label class="btn btn-light">
+                            <input type="radio" name="options" id="optnReturn" value="ReturnTrip" autocomplete="off" onclick="ShowReturnDate()"> Return
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row mb-2">
+                <div class="form-group mr-sm-1 p-0 col-2 ">
+                    <input type="text" class="form-control" name="txtfrom" id="txtfrom" placeholder="From" required>
+                </div>
+                <div class="form-group mx-sm-1 p-0 col-2 ">
+                    <input type="text" class="form-control" name="txtTo" id="txtTo" placeholder="To" required>
+                </div>
+                <div class="form-group mx-sm-1 p-0 col-2 ">
+                    <input type="text" class="form-control" name="txtCarrier" id="txtCarrier" placeholder="Carrier" pattern=".{2,2}" required title="2 characters code">
+                </div>
+                <div class="form-group mx-sm-1 p-0 col-2 ">
+                    <input type="text" class="form-control" name="dtpDepartureDate" id="dtpDepartureDate" placeholder="Departure" required>
+                </div>
+                <div class="form-group col-2 p-0">
+                    <input type="text" class="form-control" name="dtpReturnDate" id="dtpReturnDate" placeholder="Return Date">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group mb-2 col-1">
+                    <button type="button" class="btn btn-primary" onclick="loadShopResults()">Search</button>
+                </div>
+                <div class="form-group mb-2 col-1">
+                    <button type="button" class="btn btn-secondary" onclick="loadAirPriceResults()">AirPrice</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="d-flex flex-column">
+    <img id="loading" class="text align-self-center p-2" src="~/Content/Images/loading.gif">
+</div>
+
+
+<div class="accordion" id="jsonReqRes">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#jsonReq" aria-expanded="false" aria-controls="jsonReq">
+                    JSON Request
+                </button>
+            </h2>
+        </div>
+        <div id="jsonReq" class="collapse" aria-labelledby="headingOne" data-parent="#jsonReqRes">
+            <div class="card-body" id="jsonRequest">
+
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#jsonResp" aria-expanded="false" aria-controls="jsonResp">
+                    JSON Response
+                </button>
+            </h2>
+        </div>
+        <div id="jsonResp" class="collapse" aria-labelledby="headingTwo" data-parent="#jsonReqRes">
+            <div class="card-body" id="jsonResponse">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<input id="SelectedFlights" data-selectedflights="" data-selectedReturnflights="" style="display:none" />
+
+<div class="row mt-3 d-flex align-items-center justify-content-center h-100" id="Visualize">
+
+</div>
+
+<!--hold the Airprice request/response-->
+<div id="AirPriceDetails" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Airprice Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mh-100">
+                <div class="d-flex flex-column">
+                    <img id="loadingXML" class="text align-self-center p-2" src="~/Content/Images/loading.gif">
+                </div>
+                <div class="col-12"  id="xmlRequest">
+
+                </div>
+                <div class="col-12"  id="xmlResponse">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/HybridFlowUtils.js"></script>
+}

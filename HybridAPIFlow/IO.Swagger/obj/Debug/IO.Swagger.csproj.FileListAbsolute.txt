@@ -1,0 +1,27 @@
+C:\Users\Ziad.Habchi\OneDrive - Travelport\Desktop\Workspace\Swagger Space\JSON API v11\Swagger Files\version 11.1\csharp-client\src\IO.Swagger\bin\Debug\IO.Swagger.dll
+C:\Users\Ziad.Habchi\OneDrive - Travelport\Desktop\Workspace\Swagger Space\JSON API v11\Swagger Files\version 11.1\csharp-client\src\IO.Swagger\bin\Debug\IO.Swagger.pdb
+C:\Users\Ziad.Habchi\OneDrive - Travelport\Desktop\Workspace\Swagger Space\JSON API v11\Swagger Files\version 11.1\csharp-client\src\IO.Swagger\bin\Debug\JsonSubTypes.dll
+C:\Users\Ziad.Habchi\OneDrive - Travelport\Desktop\Workspace\Swagger Space\JSON API v11\Swagger Files\version 11.1\csharp-client\src\IO.Swagger\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Ziad.Habchi\OneDrive - Travelport\Desktop\Workspace\Swagger Space\JSON API v11\Swagger Files\version 11.1\csharp-client\src\IO.Swagger\bin\Debug\RestSharp.dll
+C:\Users\Ziad.Habchi\OneDrive - Travelport\Desktop\Workspace\Swagger Space\JSON API v11\Swagger Files\version 11.1\csharp-client\src\IO.Swagger\bin\Debug\RestSharp.xml
+C:\Users\Ziad.Habchi\OneDrive - Travelport\Desktop\Workspace\Swagger Space\JSON API v11\Swagger Files\version 11.1\csharp-client\src\IO.Swagger\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Ziad.Habchi\OneDrive - Travelport\Desktop\Workspace\Swagger Space\JSON API v11\Swagger Files\version 11.1\csharp-client\src\IO.Swagger\obj\Debug\IO.Swagger.csproj.AssemblyReference.cache
+C:\Users\Ziad.Habchi\OneDrive - Travelport\Desktop\Workspace\Swagger Space\JSON API v11\Swagger Files\version 11.1\csharp-client\src\IO.Swagger\obj\Debug\IO.Swagger.csproj.CoreCompileInputs.cache
+C:\Users\Ziad.Habchi\OneDrive - Travelport\Desktop\Workspace\Swagger Space\JSON API v11\Swagger Files\version 11.1\csharp-client\src\IO.Swagger\obj\Debug\IO.Swagger.csproj.CopyComplete
+C:\Users\Ziad.Habchi\OneDrive - Travelport\Desktop\Workspace\Swagger Space\JSON API v11\Swagger Files\version 11.1\csharp-client\src\IO.Swagger\obj\Debug\IO.Swagger.dll
+C:\Users\Ziad.Habchi\OneDrive - Travelport\Desktop\Workspace\Swagger Space\JSON API v11\Swagger Files\version 11.1\csharp-client\src\IO.Swagger\obj\Debug\IO.Swagger.pdb
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\bin\Debug\IO.Swagger.dll
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\bin\Debug\IO.Swagger.pdb
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\bin\Debug\JsonSubTypes.dll
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\bin\Debug\RestSharp.dll
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\bin\Debug\RestSharp.xml
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\obj\Debug\IO.Swagger.csproj.AssemblyReference.cache
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\obj\Debug\IO.Swagger.csproj.CoreCompileInputs.cache
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\obj\Debug\IO.Swagger.csproj.CopyComplete
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\obj\Debug\IO.Swagger.dll
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\obj\Debug\IO.Swagger.pdb
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\bin\Debug\NLog.dll
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\bin\Debug\NLog.xml
+C:\Users\Ziad.Habchi\source\repos\Travelport-HybridAPI\HybridAPIFlow\IO.Swagger\bin\Debug\IO.Swagger.dll.config

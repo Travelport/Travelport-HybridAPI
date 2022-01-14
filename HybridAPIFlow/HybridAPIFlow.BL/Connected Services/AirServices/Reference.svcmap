@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1679916c-4685-48e8-b6cb-efa89b311778" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="C:\Users\Ziad.Habchi\OneDrive - Travelport\02 API\02 Schemas\uAPI\uAPI_WSDLschema_Release-V21.3.1.1004\air_v51_0\Air.wsdl" Protocol="file" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AirService.wsdl" MetadataType="Wsdl" ID="573a4768-33dd-42c6-9689-cba3ce9865e6" SourceId="1" SourceUrl="file:///C:/Users/Ziad.Habchi/OneDrive - Travelport/02 API/02 Schemas/uAPI/uAPI_WSDLschema_Release-V21.3.1.1004/air_v51_0/AirAbstract.wsdl" />
+    <MetadataFile FileName="AirService1.wsdl" MetadataType="Wsdl" ID="49e3ab17-d207-4edb-8f2f-2363752dcd8a" SourceId="1" SourceUrl="file:///C:/Users/Ziad.Habchi/OneDrive - Travelport/02 API/02 Schemas/uAPI/uAPI_WSDLschema_Release-V21.3.1.1004/air_v51_0/Air.wsdl" />
+    <MetadataFile FileName="Common.xsd" MetadataType="Schema" ID="cf74f022-e4e4-4b3b-87a4-6eb05fc059db" SourceId="1" SourceUrl="file:///C:/Users/Ziad.Habchi/OneDrive - Travelport/02 API/02 Schemas/uAPI/uAPI_WSDLschema_Release-V21.3.1.1004/common_v51_0/Common.xsd" />
+    <MetadataFile FileName="Air.xsd" MetadataType="Schema" ID="7e638220-d0e7-4fb1-8271-13631a404337" SourceId="1" SourceUrl="file:///C:/Users/Ziad.Habchi/OneDrive - Travelport/02 API/02 Schemas/uAPI/uAPI_WSDLschema_Release-V21.3.1.1004/air_v51_0/Air.xsd" />
+    <MetadataFile FileName="SessionContext_v1.xsd" MetadataType="Schema" ID="140bb213-2796-4001-b1f0-6e3519c6b579" SourceId="1" SourceUrl="file:///C:/Users/Ziad.Habchi/OneDrive - Travelport/02 API/02 Schemas/uAPI/uAPI_WSDLschema_Release-V21.3.1.1004/SessionContext_v1/SessionContext_v1.xsd" />
+    <MetadataFile FileName="CommonReqRsp.xsd" MetadataType="Schema" ID="b9ddc790-b180-4646-a2f3-df232cf5fdab" SourceId="1" SourceUrl="file:///C:/Users/Ziad.Habchi/OneDrive - Travelport/02 API/02 Schemas/uAPI/uAPI_WSDLschema_Release-V21.3.1.1004/common_v51_0/CommonReqRsp.xsd" />
+    <MetadataFile FileName="Rail.xsd" MetadataType="Schema" ID="7fb45c16-cbf9-4e93-8456-92c41fc938f1" SourceId="1" SourceUrl="file:///C:/Users/Ziad.Habchi/OneDrive - Travelport/02 API/02 Schemas/uAPI/uAPI_WSDLschema_Release-V21.3.1.1004/rail_v51_0/Rail.xsd" />
+    <MetadataFile FileName="AirReqRsp.xsd" MetadataType="Schema" ID="83318373-48d8-4447-8982-b7c330fdcbaa" SourceId="1" SourceUrl="file:///C:/Users/Ziad.Habchi/OneDrive - Travelport/02 API/02 Schemas/uAPI/uAPI_WSDLschema_Release-V21.3.1.1004/air_v51_0/AirReqRsp.xsd" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
