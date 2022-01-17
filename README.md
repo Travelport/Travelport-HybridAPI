@@ -23,6 +23,25 @@ This repository contains folders as per the following hierarchy:
 
 To launch this solution, open the file HybridAPIFlow/HybridAPIFlow.sln in visual studio.
 
+### Update the Web.Config to inlcude your API credentials
+
+You will need to update the web.config keys with the JSON and XML API credentials for the application to work.
+
+    <add key="jsonAPI_OAuthUsername" value="xxx" />
+    <add key="jsonAPI_OAuthPassword" value="xxx" />
+    <add key="jsonAPI_OAuthClientId" value="xxx" />
+    <add key="jsonAPI_OAuthSecret" value="xxx" />
+    <add key="jsonAPI_AccessGroup" value="xxx" />
+    <add key="xmlBranchId" value="xxx" />
+    <add key="xmlUsername" value="xxx" />
+    <add key="xmlPassword" value="xxx" />
+
+Make sure to change the endpoint to point to the correct enviroment (production or pre-production)
+
+    <add key="xmlEndpoint" value="https://emea.universal-api.travelport.com/B2BGateway/connect/uAPI/AirService" />
+    <add key="jsonAPI_OAuthEndPoint" value="https://oauth.travelport.com/oauth/oauth20/token" />
+    <add key="jsonAPI_Endpoint" value="https://api.travelport.com" />
+
 ## Adding reference to JSON API
 **The following steps are not required if you open the solution file in this repo. In case you want to start a new blank project and add reference to JSON and XML API, please follow these steps:**  
 
