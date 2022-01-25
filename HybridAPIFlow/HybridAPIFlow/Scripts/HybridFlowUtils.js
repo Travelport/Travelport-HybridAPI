@@ -316,10 +316,14 @@ function DisplayAllOffersV11(offerings) {
 }
 
 function drawCards(OfferList) {
-    body = "";
+
+    outbound = "";
+    offerCard = "";
+
     OfferList.forEach(function (offer) {
-        body += '<div class = "card-deck m-1 col-12">'
+       
         offer.OfferDetails.forEach(function (OfferDetails) {
+            offerCard += '<div class = "m-1 col-10">'
             let Currency = OfferDetails.Currency;
             let TotalPrice = OfferDetails.TotalPrice;
             let OfferColor = OfferDetails.OfferColor;
@@ -327,14 +331,9 @@ function drawCards(OfferList) {
             let tierLevel = OfferDetails.tierLevel;
             let source = OfferDetails.OfferSource;
             var guid = createGuid();
-            body += `<div id="card-${guid}" class="card" style="background-color:${OfferColor}"') >`;
-            body += `<div class = "card-topper card-img-top"></div><div class="card-body"><div class="card-title">`;
-            if ($("#optnOneWay").is(':checked')) {
-                body += `<input id="rbOut${guid}" class="pin" name="selectedcard" type="radio">`;
-            }
-            body += `<h2> ${Currency} ${TotalPrice} </h2></div>`;
-            body += `<h5 class = "card-subtitle mb-2 text-muted"> ${BrandTierDescription}</h5>
-                            <h6><ul style="list-style-type:none;padding:0px;margin:0px;"> Source:${source}</h6> `;
+            let JourneyOrigin = "Test1";
+            let JourneyDest = "Test2";
+            let JounreyDate = "1/1/2022";
 
             OfferDetails.flights.forEach(function (flight) {
                 let Carrier = flight.Carrier;
@@ -346,23 +345,64 @@ function drawCards(OfferList) {
                 let ArrivalDate = flight.ArrivalDate;
                 let ArrivalTime = flight.ArrivalTime;
                 let ClassofService = flight.ClassofService;
-                body += `<li style="list-style:none"> <i class="fas fa-plane-departure"></i> 
+                outbound += `<li style="list-style:none"> <i class="fas fa-plane-departure"></i>
                                 <img src=${logoLink + Carrier}.gif> ${Carrier}${FlightNumber} RBD:${ClassofService}<br \>
                                 <ul><li>${Origin} ${DepDate} ${DepTime}  </li> 
                                 <li>${Destination} ${ArrivalDate} ${ArrivalTime}</li></ul></li>`;
             });
 
             if (OfferDetails.returnflights.length == 0) {
-                body += `<input id=selected${guid} style=display:none data-flighttier=${tierLevel} data-flights=${JSON.stringify(OfferDetails.flights)} >`
+                offerCard += `<div id="card-${guid}" class="card m-2" style="background-color:${OfferColor}"') >`;
+                offerCard += `  <div class="card-header">
+                                <div class="row align-items-center trip-title">
+                                  <div class="col-5 col-md-auto text-center text-md-left">
+                                    <h5 class="m-0">New Delhi (DEL)</h5>
+                                  </div>
+                                  <div class="col-2 col-md-auto text-8 text-black-50 text-center trip-arrow">➝</div>
+                                  <div class="col-5 col-md-auto text-center text-md-left">
+                                    <h5 class="m-0">Sydney (SYD)</h5>
+                                  </div>
+                                  <div class="col-12 col-md-auto text-3 text-dark text-center mt-2 mt-md-0 ml-md-auto">15 Jun 21, Sat</div>
+                                </div>
+                              </div><div class = "card-topper card-img-top"></div><div class="card-body"><div class="card-title">`;
+
+                offerCard += `<h2> ${Currency} ${TotalPrice} </h2></div>`;
+                offerCard += `<h5 class = "card-subtitle mb-2 text-muted"> ${BrandTierDescription}</h5>
+                            <h6><ul style="list-style-type:none;padding:0px;margin:0px;"> Source:${source}</h6> `;
+
+                outbound += `<input id=selected${guid} style=display:none data-flighttier=${tierLevel} data-flights=${JSON.stringify(OfferDetails.flights)} >`
+
+                offerCard += outbound;
             }
 
-            body += `<div class="accordion" id="ReturnFlights${guid}">`
+            
             var returnOptionIndex = 0;
 
 
             OfferDetails.returnflights.forEach(function (rflight) {
 
+                offerCard += `<div id="card-${guid}" class="card m-2" style="background-color:${OfferColor}"') >   
+                                                <input id="rbIn${uid}" name="selectedcard"  class="pin" type="radio" ')>`;
+                offerCard += ` <div class="card-header">
+                                <div class="row align-items-center trip-title">
+                                  <div class="col-5 col-md-auto text-center text-md-left">
+                                    <h5 class = "m-0"> ${JourneyOrigin} </h5>
+                                  </div>
+                                  <div class="col-2 col-md-auto text-8 text-black-50 text-center trip-arrow">➝</div>
+                                  <div class="col-5 col-md-auto text-center text-md-left">
+                                    <h5 class="m-0"> ${JourneyDest} </h5>
+                                  </div>
+                                  <div class = "col-12 col-md-auto text-3 text-dark text-center mt-2 mt-md-0 ml-md-auto"> ${JounreyDate} </div>
+                                </div>
+                              </div><div class = "card-topper card-img-top"></div><div class="card-body"><div class="card-title">`;
+
+                offerCard += `<h2> ${Currency} ${TotalPrice} </h2></div>`;
+                offerCard += `<h5 class = "card-subtitle mb-2 text-muted"> ${BrandTierDescription}</h5>
+                            <h6><ul style="list-style-type:none;padding:0px;margin:0px;"> Source:${source}</h6> `;
+                offerCard += outbound;
+
                 for (let index = 0; index < rflight.length; index++) {
+                    inbound = "";
                     const segment = rflight[index];
                     let Carrier = segment.Carrier;
                     let FlightNumber = segment.FlightNumber;
@@ -374,41 +414,27 @@ function drawCards(OfferList) {
                     let ArrivalTime = segment.ArrivalTime;
                     let ClassofService = segment.ClassofService;
                     var uid = guid + "-" + returnOptionIndex;
-                    var selectedflight = JSON.stringify(OfferDetails.flights) + `,` + JSON.stringify(rflight);
+                   
 
-                    body += `<div class="card">
-                                    <div class="card-header">
-                                      <h5 class="mb-0">
-                                        <button class="btn btn-link" type="button"
-                                            data-toggle="collapse" data-target="#A${uid}"
-                                            aria-expanded="true" aria-controls="A${uid}">
-                                         ${rflight[index].Carrier}${rflight[index].FlightNumber}
-                                        </button>
-                                      </h5>
-                                    </div>
-                                    <div id=A${uid} class="collapse" data-parent="#ReturnFlights${guid}">
-                                        <li style="list-style:none">
-                                            <i class="fas fa-plane-arrival"></i>
-                                                <input id="rbIn${uid}" name="selectedcard"  class="pin" type="radio" ') >
+                    inbound += `<li style="list-style:none"><i class="fas fa-plane-arrival"></i>                                         
                                                 <img src="${logoLink + Carrier}.gif"> ${Carrier}${FlightNumber} 
                                                         RBD:${ClassofService} <br \>
                                                     <ul><li>${Origin}${DepDate} ${DepTime}   </li>
                                                     <li>${Destination} ${ArrivalDate} ${ArrivalTime}</li></ul>
-                                        </li>
-                                        <input id=selected${uid} style=display:none data-flighttier=${tierLevel} data-flights=${JSON.stringify(OfferDetails.flights)} data-returnflights=${JSON.stringify(rflight)} >
-                                    </div>
-                                   </div>`;
+                                        </li>`;
                 }
 
+                offerCard += inbound;
                 returnOptionIndex++;
+
+                offerCard += "</div></div>";
             });
 
-            body += `</div>`;
-            body += `</ul></div></div>`;
+            offerCard += "</div>";
         });
-        body += `</div>`;
+       
     });
-    return body;
+    return offerCard;
 }
 
 function ExecuteAjaxAirPrice(segmts, returnSegments, tierLevel) {
