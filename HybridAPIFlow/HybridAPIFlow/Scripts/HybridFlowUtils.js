@@ -73,21 +73,22 @@ function unclickRadio() {
     $("#SelectedFlights").val('');
 }
 function clickRadio(inputElement) {
+    
     $("#" + inputElement).prop("checked", true);
-    var cardId = inputElement.replace('rbOut', '').replace('rbIn', '');
- 
+    var cardId = inputElement.replace('rbOut', '').replace('rbIn', '');    
     $("#SelectedFlights").data('selectedflights', $("#selected" + cardId).data(`flights`));
     $("#SelectedFlights").data('selectedReturnflights', $("#selected" + cardId).data(`returnflights`));
-
     $("#SelectedFlights").data('selectedflighttier', $("#selected" + cardId).data(`flighttier`));
    
 }
 function removeActive() {
     $(".card").removeClass("active-card");
 }
+
 function makeActive(element) {
-    var cardId = element.replace('rbOut', '').replace('rbIn', '');
-    $("#card-" + cardId).addClass("active-card");
+    
+    var cardId = element.replace('rbOut', '').replace('rbIn', '');   
+    $("#card-" + cardId).addClass("active-card");    
 }
 
 
@@ -101,17 +102,17 @@ function bindRadioButtonsEvents() {
         makeActive(radioClicked);
     });
 
-    if ($("#optnOneWay").is(':checked')) {
+    
 
-        $(".card").click(function () {//Clicking the card
+    $(".card").click(function () {//Clicking the card
 
-            var inputElement = $(this).find('input[type=radio]').attr('id');
-            //unclickRadio();
-            removeActive();
-            makeActive(inputElement);
-            clickRadio(inputElement);
-        });
-    }
+        var inputElement = $(this).find('input[type=radio]').attr('id');
+        //unclickRadio();
+        removeActive();
+        makeActive(inputElement);
+        clickRadio(inputElement);
+    });
+    
 }
 
 function HideReturnDate() {
@@ -385,7 +386,7 @@ function drawCards(OfferList) {
             OfferDetails.returnflights.forEach(function (rflight) {
                 var uid = guid + "-" + returnOptionIndex;
 
-                offerCard += `<div id="card-${guid}" class="card m-2" style="background-color:${OfferColor}"') >   
+                offerCard += `<div id="card-${uid}" class="card m-2" style="background-color:${OfferColor}"') >   
                                                 <input id="rbIn${uid}" name="selectedcard"  class="pin" type="radio" ')>`;
                 offerCard += ` <div class="card-header">
                                 <div class="row align-items-center trip-title">
