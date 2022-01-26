@@ -331,11 +331,10 @@ function drawCards(OfferList) {
             let tierLevel = OfferDetails.tierLevel;
             let source = OfferDetails.OfferSource;
             var guid = createGuid();
-            let JourneyOrigin = "Test1";
-            let JourneyDest = "Test2";
-            let JounreyDate = "1/1/2022";
+           
 
             OfferDetails.flights.forEach(function (flight) {
+                outbound = "";
                 let Carrier = flight.Carrier;
                 let FlightNumber = flight.FlightNumber;
                 let Origin = flight.Origin;
@@ -345,34 +344,38 @@ function drawCards(OfferList) {
                 let ArrivalDate = flight.ArrivalDate;
                 let ArrivalTime = flight.ArrivalTime;
                 let ClassofService = flight.ClassofService;
-                outbound += `<li style="list-style:none"> <i class="fas fa-plane-departure"></i>
-                                <img src=${logoLink + Carrier}.gif> ${Carrier}${FlightNumber} RBD:${ClassofService}<br \>
-                                <ul><li>${Origin} ${DepDate} ${DepTime}  </li> 
-                                <li>${Destination} ${ArrivalDate} ${ArrivalTime}</li></ul></li>`;
+                outbound += `${Carrier} ${FlightNumber} RBD: ${ClassofService}  Departure Date: ${DepDate} <br \>
+                                  <div class="row align-items-center trip-title">
+                                  <i class="fas fa-plane-departure"></i>
+                                    <div class="col-5 col-md-auto text-center text-md-left">
+                                      <h5 class="m-0"> ${Origin} ${DepTime}</h5>
+                                    </div>
+                                    <div class="col-2 col-md-auto text-8 text-black-50 text-center trip-arrow">➝</div>
+                                    <div class="col-5 col-md-auto text-center text-md-left">
+                                      <h5 class="m-0">${Destination} ${ArrivalTime}</h5>
+                                    </div>                                    
+                                  </div>`;
             });
 
             if (OfferDetails.returnflights.length == 0) {
-                offerCard += `<div id="card-${guid}" class="card m-2" style="background-color:${OfferColor}"') >`;
+                offerCard += `<div id="card-${guid}" class="card m-2" style="background-color:${OfferColor}"') >`;               
+                offerCard += `<input id="rbOut${guid}" class="pin" name="selectedcard" type="radio">`;                
                 offerCard += `  <div class="card-header">
-                                <div class="row align-items-center trip-title">
-                                  <div class="col-5 col-md-auto text-center text-md-left">
-                                    <h5 class="m-0">New Delhi (DEL)</h5>
-                                  </div>
-                                  <div class="col-2 col-md-auto text-8 text-black-50 text-center trip-arrow">➝</div>
-                                  <div class="col-5 col-md-auto text-center text-md-left">
-                                    <h5 class="m-0">Sydney (SYD)</h5>
-                                  </div>
-                                  <div class="col-12 col-md-auto text-3 text-dark text-center mt-2 mt-md-0 ml-md-auto">15 Jun 21, Sat</div>
-                                </div>
-                              </div><div class = "card-topper card-img-top"></div><div class="card-body"><div class="card-title">`;
+                                    <div class="row align-items-center trip-title">
+                                      <div class="col-5 col-md-auto text-center text-md-left">
+                                        <h2> ${Currency} ${TotalPrice}</h2>
+                                      </div>                   
+                                      <div class="col-12 col-md-auto text-3 text-dark text-center mt-2 mt-md-0 ml-md-auto">${BrandTierDescription}</div>
+                                    </div>
+                                  </div><div class = "card-topper card-img-top"></div><div class="card-body"><div class="card-title">`;
 
-                offerCard += `<h2> ${Currency} ${TotalPrice} </h2></div>`;
-                offerCard += `<h5 class = "card-subtitle mb-2 text-muted"> ${BrandTierDescription}</h5>
-                            <h6><ul style="list-style-type:none;padding:0px;margin:0px;"> Source:${source}</h6> `;
+                offerCard += `</div>`;
+                offerCard += `<h6><ul style="list-style-type:none;padding:0px;margin:0px;"> Source:${source}</h6> `;
 
                 outbound += `<input id=selected${guid} style=display:none data-flighttier=${tierLevel} data-flights=${JSON.stringify(OfferDetails.flights)} >`
 
                 offerCard += outbound;
+                offerCard += "</div></div>";
             }
 
             
@@ -380,26 +383,22 @@ function drawCards(OfferList) {
 
 
             OfferDetails.returnflights.forEach(function (rflight) {
+                var uid = guid + "-" + returnOptionIndex;
 
                 offerCard += `<div id="card-${guid}" class="card m-2" style="background-color:${OfferColor}"') >   
                                                 <input id="rbIn${uid}" name="selectedcard"  class="pin" type="radio" ')>`;
                 offerCard += ` <div class="card-header">
                                 <div class="row align-items-center trip-title">
                                   <div class="col-5 col-md-auto text-center text-md-left">
-                                    <h5 class = "m-0"> ${JourneyOrigin} </h5>
-                                  </div>
-                                  <div class="col-2 col-md-auto text-8 text-black-50 text-center trip-arrow">➝</div>
-                                  <div class="col-5 col-md-auto text-center text-md-left">
-                                    <h5 class="m-0"> ${JourneyDest} </h5>
-                                  </div>
-                                  <div class = "col-12 col-md-auto text-3 text-dark text-center mt-2 mt-md-0 ml-md-auto"> ${JounreyDate} </div>
+                                    <h2> ${Currency} ${TotalPrice}</h2>
+                                  </div>                   
+                                  <div class="col-12 col-md-auto text-3 text-dark text-center mt-2 mt-md-0 ml-md-auto">${BrandTierDescription}</div>
                                 </div>
-                              </div><div class = "card-topper card-img-top"></div><div class="card-body"><div class="card-title">`;
+                               </div><div class = "card-body">`;
 
-                offerCard += `<h2> ${Currency} ${TotalPrice} </h2></div>`;
-                offerCard += `<h5 class = "card-subtitle mb-2 text-muted"> ${BrandTierDescription}</h5>
-                            <h6><ul style="list-style-type:none;padding:0px;margin:0px;"> Source:${source}</h6> `;
+                offerCard += `<h6><ul style="list-style-type:none;padding:0px;margin:0px;"> Source:${source}</h6> `;
                 offerCard += outbound;
+
 
                 for (let index = 0; index < rflight.length; index++) {
                     inbound = "";
@@ -413,15 +412,22 @@ function drawCards(OfferList) {
                     let ArrivalDate = segment.ArrivalDate;
                     let ArrivalTime = segment.ArrivalTime;
                     let ClassofService = segment.ClassofService;
-                    var uid = guid + "-" + returnOptionIndex;
+                   
                    
 
-                    inbound += `<li style="list-style:none"><i class="fas fa-plane-arrival"></i>                                         
-                                                <img src="${logoLink + Carrier}.gif"> ${Carrier}${FlightNumber} 
-                                                        RBD:${ClassofService} <br \>
-                                                    <ul><li>${Origin}${DepDate} ${DepTime}   </li>
-                                                    <li>${Destination} ${ArrivalDate} ${ArrivalTime}</li></ul>
-                                        </li>`;
+                    inbound += `${Carrier}${FlightNumber} 
+                                                        RBD:${ClassofService}  Departure Date: ${DepDate} <br \>
+                                <div class="row align-items-center trip-title">
+                                  <i class="fas fa-plane-arrival"></i>
+                                    <div class="col-5 col-md-auto text-center text-md-left">
+                                      <h5 class="m-0"> ${Origin} ${DepTime}</h5>
+                                    </div>
+                                    <div class="col-2 col-md-auto text-8 text-black-50 text-center trip-arrow">➝</div>
+                                    <div class="col-5 col-md-auto text-center text-md-left">
+                                      <h5 class="m-0">${Destination} ${ArrivalTime}</h5>
+                                    </div>                                    
+                                  </div>`;
+                    inbound += `<input id=selected${uid} style=display:none data-flighttier=${tierLevel} data-flights=${JSON.stringify(OfferDetails.flights)} data-returnflights=${JSON.stringify(rflight)} >`;
                 }
 
                 offerCard += inbound;
@@ -465,26 +471,26 @@ function ExecuteAjaxAirPrice(segmts, returnSegments, tierLevel) {
         {
 
             Pricebody = `
-<div class="container">
-  <div class="card-header-custom" style="background-color:#F7E4CB" >
-<h5 class="modal-title"Air price Solutions</h5>
-</div>
-<div class="card-group">
-`
-            res.pricingSolutions.forEach(function (ps) {
+                            <div class="container">
+                              <div class="card-header-custom" style="background-color:#F7E4CB" >
+                            <h5 class="modal-title"Air price Solutions</h5>
+                            </div>
+                            <div class="card-group">
+                            `
+                                        res.pricingSolutions.forEach(function (ps) {
 
-                Pricebody += `<div class="card" style="background-color:#F7E4CB">
-    <div class="card-block">
-        <h3> ${ps.TotalPrice} </h3>
-      <h5 class = "card-subtitle mb-2"> ${ps.BrandName}</h5>
-        <ul style="list-style-type:none">
-      <li class="card-text"><small>Base Price : `+ ps.BasePrice + `</small></li>
-      <li class="card-text"><small>Taxes : `+ ps.Taxes + `</small></li>
-       <li class="card-text"><small>Fees : `+ ps.Fees + `</small></li>
-        </ul>
-    </div>
-  </div>
-</div>`
+                                            Pricebody += `<div class="card" style="background-color:#F7E4CB">
+                                <div class="card-block">
+                                    <h3> ${ps.TotalPrice} </h3>
+                                  <h5 class = "card-subtitle mb-2"> ${ps.BrandName}</h5>
+                                    <ul style="list-style-type:none">
+                                  <li class="card-text"><small>Base Price : `+ ps.BasePrice + `</small></li>
+                                  <li class="card-text"><small>Taxes : `+ ps.Taxes + `</small></li>
+                                   <li class="card-text"><small>Fees : `+ ps.Fees + `</small></li>
+                                    </ul>
+                                </div>
+                              </div>
+                            </div>`
 
             })
             Pricebody += `</div>`;
@@ -590,10 +596,10 @@ function getFlightDetails(refProduct, reference) {
                 flight.Carrier = refFlight.carrier;
                 flight.FlightNumber = refFlight.number;
                 flight.Origin = refFlight.Departure.location;
-                flight.DepDate = refFlight.Departure.date.substring(5, refFlight.Departure.date.length);
+                flight.DepDate = refFlight.Departure.date;//refFlight.Departure.date.substring(5, refFlight.Departure.date.length);
                 flight.DepTime = refFlight.Departure.time.substring(0, refFlight.Departure.time.length - 3);
                 flight.Destination = refFlight.Arrival.location;
-                flight.ArrivalDate = refFlight.Arrival.date.substring(5, refFlight.Arrival.date.length);
+                flight.ArrivalDate = refFlight.Arrival.date;//refFlight.Arrival.date.substring(5, refFlight.Arrival.date.length);
                 flight.ArrivalTime = refFlight.Arrival.time.substring(0, refFlight.Arrival.time.length - 3);
                 flight.ClassofService = getFlightProductDetails(refProduct, l);
                 flights.push(flight);

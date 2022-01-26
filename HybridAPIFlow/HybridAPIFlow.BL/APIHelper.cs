@@ -273,10 +273,10 @@ namespace HybridAPIFlow.BL
                 typeBaseAirSegment segment = new typeBaseAirSegment();
                 segment.Group = pricingSegments[i].Group;
                 segment.Origin = pricingSegments[i].Origin;
-                segment.DepartureTime = DateTime.Now.Year.ToString() + "-" + pricingSegments[i].DepDate + "T" + pricingSegments[i].DepTime + ":00"; //get proper date
+                segment.DepartureTime =  pricingSegments[i].DepDate + "T" + pricingSegments[i].DepTime + ":00"; 
                 segment.Carrier = pricingSegments[i].Carrier;
                 segment.Destination = pricingSegments[i].Destination;
-                segment.ArrivalTime = DateTime.Now.Year.ToString() + "-" + pricingSegments[i].ArrivalDate + "T" + pricingSegments[i].ArrivalTime + ":00";
+                segment.ArrivalTime =  pricingSegments[i].ArrivalDate + "T" + pricingSegments[i].ArrivalTime + ":00";
                 segment.ProviderCode = "1G";
                 segment.FlightNumber = pricingSegments[i].FlightNumber;
                 segment.ClassOfService = pricingSegments[i].ClassofService;
