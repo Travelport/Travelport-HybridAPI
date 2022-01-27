@@ -12,6 +12,7 @@
     Sequence;
     CombinabilityCode;
     OfferSource;
+    Brandattributes;
 }
 
 class FlightDetails {
@@ -26,6 +27,10 @@ class FlightDetails {
     ClassofService;
 }
 
+class BrandAttributes {
+    brandAttribute;
+}
+
 
 class FFOffers {
     OfferId;
@@ -35,7 +40,7 @@ class FFOffers {
 const logoLink = 'https://goprivate.wspan.com/sharedservices/images/airlineimages/logoAir';
 
 function debug(logline) {
-    console.log(logline);
+    console.log(JSON.stringify(logline));
 }
 
 $(document).ready(function () {
@@ -334,6 +339,7 @@ function drawCards(OfferList) {
             let BrandTierDescription = OfferDetails.BrandTierDescription;
             let tierLevel = OfferDetails.tierLevel;
             let source = OfferDetails.OfferSource;
+            let attributes = OfferDetails.Brandattributes;
             var guid = createGuid();
            
 
@@ -347,6 +353,7 @@ function drawCards(OfferList) {
                 let Destination = flight.Destination;
                 let ArrivalDate = flight.ArrivalDate;
                 let ArrivalTime = flight.ArrivalTime;
+              
                 let ClassofService = flight.ClassofService;
                 outbound += `${Carrier} ${FlightNumber} RBD: ${ClassofService}  Departure Date: ${DepDate} <br \>
                                   <div class="row align-items-center trip-title">
@@ -379,7 +386,13 @@ function drawCards(OfferList) {
                 outbound += `<input id=selected${guid} style=display:none data-flighttier=${tierLevel} data-flights=${JSON.stringify(OfferDetails.flights)} >`
 
                 offerCard += outbound;
-                offerCard += "</div></div>";
+
+                offerCard += `<div class="row">`;
+                for (var i = 0; i < attributes.length - 1; i++) {
+                    offerCard += `<div class="col ml-1"><img src="./Content/Images/${attributes[i].brandAttribute}.png" style="width:16px;height:16px;"></div>`
+                }           
+
+                offerCard += "</div></div></div>";
             }
 
             
@@ -550,6 +563,7 @@ function getBrandDetails(ProductOffer, Reference) {
     ProductDetails.BrandRef = ProductOffer.Brand.BrandRef;
     ProductDetails.BrandTierDescription = getBrandDetailsAsString(ProductOffer.Brand.BrandRef, Reference);
     ProductDetails.tierLevel = getTier(ProductOffer.Brand.BrandRef, Reference);
+    ProductDetails.Brandattributes = getBrandAttributes(ProductOffer.Brand.BrandRef, Reference);
     ProductDetails.flights = getProductsDetails(ProductOffer.Product, Reference);
     ProductDetails.Carrier = getCarrierProductsDetailsAsString(ProductOffer.Product, Reference);
 
@@ -652,6 +666,33 @@ function getTier(brandRef, reference) {
 
     return BrandTier;
 }
+
+function getBrandAttributes(brandRef, reference) {
+    //var attributes = new BrandAttributes();
+    var brandAttributes = new Array();
+    reference.forEach(function (refOption) {
+        if (refOption["@type"] == "ReferenceListBrand") {
+
+            if (refOption.Brand != null)
+                refOption.Brand.forEach(function (brand) {
+                    if (brand.id == brandRef) {
+
+                        brand.BrandAttribute.forEach(function (eachBrandAttribute) {
+                            var brandAttributeObj = new BrandAttributes();
+                            if (eachBrandAttribute.inclusion == "Not Offered") {
+                                brandAttributeObj.brandAttribute = eachBrandAttribute.classification + "NotOffered";
+                            } else {
+                                brandAttributeObj.brandAttribute = eachBrandAttribute.classification + eachBrandAttribute.inclusion;
+                            }
+                            brandAttributes.push(brandAttributeObj);
+                        })                        
+                    }
+                })
+        }
+    })
+    return brandAttributes;
+}
+
 
 function getProductsDetailsAsString(products, reference) {
     var details = "";
