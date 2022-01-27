@@ -19,7 +19,7 @@
                 <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "nav-item active" : "nav-item")">
                     @Html.ActionLink("JSON/XML Hybrid Flow", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
                 </li>
-            
+
                 <li>
                     <span class="nav-link">Hello!</span>
                 </li>
@@ -33,12 +33,13 @@
         <footer>
             <p>&copy; @DateTime.Now.Year - Technology Optimization</p>
         </footer>
-    </div>        
-    
+    </div>
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/gijgo")
+    @Scripts.Render("~/bundles/clipboardjs")
     @Scripts.Render("~/bundles/prismjs")
     @RenderSection("scripts", required: false)
 </body>

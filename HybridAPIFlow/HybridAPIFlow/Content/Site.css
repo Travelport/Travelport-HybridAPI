@@ -47,3 +47,39 @@ textarea {
 .card {
     cursor: pointer;
 }
+
+
+.snippet-wrapper {
+    position: relative;
+    margin: 5px 0 20px 0;
+}
+
+    .snippet-wrapper .snippet {
+        background: #f9f9fa;
+        border-radius: 4px;
+    }
+
+        .snippet-wrapper .snippet > code {
+            background: #f9f9fa;
+            font-size: 14px;
+            line-height: 1.69;
+            color: #000000;
+        }
+
+    .snippet-wrapper .icon {
+        position: absolute;
+        top: 10px;
+        z-index: 1;
+        border: 0;
+        background: none;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+        .snippet-wrapper .icon.copy-btn {
+            right: 10px;
+        }
+
+        .snippet-wrapper .icon.toggle-expand {
+            right: 37px;
+        }

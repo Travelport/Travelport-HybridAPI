@@ -87,6 +87,11 @@
             </h2>
         </div>
         <div id="jsonReq" class="collapse" aria-labelledby="headingOne" data-parent="#jsonReqRes">
+            <div class="row snippet-wrapper">
+                <button class="btn border-0 float-right icon copy-btn" id="cpyJSONReqtoclipboard" type="button" data-clipboard-target="#jsonRequest" data-clipboard-action="copy">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
             <div class="card-body" id="jsonRequest">
 
             </div>
@@ -101,6 +106,11 @@
             </h2>
         </div>
         <div id="jsonResp" class="collapse" aria-labelledby="headingTwo" data-parent="#jsonReqRes">
+            <div class="row snippet-wrapper">
+                <button class="btn border-0 float-right icon copy-btn" id="cpyJSONRestoclipboard" type="button" data-clipboard-target="#jsonResponse" data-clipboard-action="copy">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
             <div class="card-body" id="jsonResponse">
 
             </div>
@@ -165,14 +175,6 @@
                     </div>
                 </div>
 
-
-
-                <!-- <div class="col-12" id="xmlRequest">
-
-    </div>
-    <div class="col-12" id="xmlResponse">
-
-    </div>-->
             </div>
         </div>
     </div>
@@ -181,4 +183,8 @@
 @section scripts
 {
     <script type="text/javascript" src="~/Scripts/HybridFlowUtils.js"></script>
+    <script>
+        var clipboardReqXml = new ClipboardJS('#cpyJSONReqtoclipboard');
+        var clipboardResXml = new ClipboardJS('#cpyJSONRestoclipboard');
+    </script> 
 }

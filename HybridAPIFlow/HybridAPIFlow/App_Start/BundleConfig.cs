@@ -24,7 +24,10 @@ namespace HybridAPIFlow
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
-            
+
+            bundles.Add(new ScriptBundle("~/bundles/clipboardjs").Include(
+                   "~/Scripts/clipboard.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/prismjs").Include(
                "~/Scripts/prism.js"));
 

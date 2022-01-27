@@ -75,20 +75,23 @@ function unclickRadio() {
 function clickRadio(inputElement) {
     
     $("#" + inputElement).prop("checked", true);
-    var cardId = inputElement.replace('rbOut', '').replace('rbIn', '');    
-    $("#SelectedFlights").data('selectedflights', $("#selected" + cardId).data(`flights`));
-    $("#SelectedFlights").data('selectedReturnflights', $("#selected" + cardId).data(`returnflights`));
-    $("#SelectedFlights").data('selectedflighttier', $("#selected" + cardId).data(`flighttier`));
-   
+    if (inputElement != null) {
+        var cardId = inputElement.replace('rbOut', '').replace('rbIn', '');
+        $("#SelectedFlights").data('selectedflights', $("#selected" + cardId).data(`flights`));
+        $("#SelectedFlights").data('selectedReturnflights', $("#selected" + cardId).data(`returnflights`));
+        $("#SelectedFlights").data('selectedflighttier', $("#selected" + cardId).data(`flighttier`));
+    }
 }
 function removeActive() {
     $(".card").removeClass("active-card");
 }
 
 function makeActive(element) {
-    
-    var cardId = element.replace('rbOut', '').replace('rbIn', '');   
-    $("#card-" + cardId).addClass("active-card");    
+
+    if (element != null) {
+        var cardId = element.replace('rbOut', '').replace('rbIn', '');
+        $("#card-" + cardId).addClass("active-card");
+    }
 }
 
 
