@@ -47,7 +47,7 @@ $(document).ready(function () {
     $("#loading").hide();
     $("#jsonRequest").hide();
     $('#dtpReturnDate').hide();
-   
+    $('#errorbox').hide();
 
     var date = new Date();
     date.setDate(date.getDate() - 1);
@@ -85,7 +85,7 @@ function clickRadio(inputElement) {
         $("#SelectedFlights").data('selectedflights', $("#selected" + cardId).data(`flights`));
         $("#SelectedFlights").data('selectedReturnflights', $("#selected" + cardId).data(`returnflights`));
         $("#SelectedFlights").data('selectedflighttier', $("#selected" + cardId).data(`flighttier`));
-    }
+    }      
 }
 function removeActive() {
     $(".card").removeClass("active-card");
@@ -148,6 +148,10 @@ function loadShopResults() {
         $("#jsonRequest").empty();
         $("#jsonResponse").empty();
         $("#Visualize").empty();
+        $('#errorbox').hide();
+        $("#SelectedFlights").removeData('selectedflights');
+        $("#SelectedFlights").removeData('selectedReturnflights');
+        $("#SelectedFlights").removeData('selectedflighttier');
 
         $.ajax({
             url: $("#requestForm").data('request-url'),
@@ -176,10 +180,17 @@ function loadShopResults() {
             }
             else if (data.Status == 1) {
                 $("#loading").hide();
-                $('#configModal').modal('show')
+                
+                $('#errorbox').show();
+                var jsonReqString = JSON.stringify(data.Request, null, 4);
+                var jsonReq = JSON.parse(jsonReqString);
+                showJsonRequest(jsonReq);
+                showJsonResponse(data.offerings);
+                $("#jsonReqRes").show();
             }
         }).fail(function (error) {
-            alert("todo: error");
+            //alert("todo: error");
+            $('#errorbox').show();
             $("#loading").hide();
         });
 
@@ -342,9 +353,9 @@ function drawCards(OfferList) {
             let attributes = OfferDetails.Brandattributes;
             var guid = createGuid();
            
-
+            outbound = "";
             OfferDetails.flights.forEach(function (flight) {
-                outbound = "";
+                
                 let Carrier = flight.Carrier;
                 let FlightNumber = flight.FlightNumber;
                 let Origin = flight.Origin;
@@ -415,10 +426,10 @@ function drawCards(OfferList) {
 
                 offerCard += `<h6><ul style="list-style-type:none;padding:0px;margin:0px;"> Source:${source}</h6> `;
                 offerCard += outbound;
-
-
+                               
+                inbound = "";
                 for (let index = 0; index < rflight.length; index++) {
-                    inbound = "";
+                   
                     const segment = rflight[index];
                     let Carrier = segment.Carrier;
                     let FlightNumber = segment.FlightNumber;
@@ -445,7 +456,14 @@ function drawCards(OfferList) {
                                     </div>                                    
                                   </div>`;
                     inbound += `<input id=selected${uid} style=display:none data-flighttier=${tierLevel} data-flights=${JSON.stringify(OfferDetails.flights)} data-returnflights=${JSON.stringify(rflight)} >`;
+                   
                 }
+
+                inbound += `<div class="row">`;
+                for (var i = 0; i < attributes.length - 1; i++) {
+                    inbound += `<div class="col ml-1"><img src="./Content/Images/${attributes[i].brandAttribute}.png" style="width:16px;height:16px;"></div>`
+                }
+                inbound += "</div>";
 
                 offerCard += inbound;
                 returnOptionIndex++;
@@ -487,31 +505,8 @@ function ExecuteAjaxAirPrice(segmts, returnSegments, tierLevel) {
         else if (res.Status == 0)//success
         {
 
-            Pricebody = `
-                            <div class="container">
-                              <div class="card-header-custom" style="background-color:#F7E4CB" >
-                            <h5 class="modal-title"Air price Solutions</h5>
-                            </div>
-                            <div class="card-group">
-                            `
-                                        res.pricingSolutions.forEach(function (ps) {
-
-                                            Pricebody += `<div class="card" style="background-color:#F7E4CB">
-                                <div class="card-block">
-                                    <h3> ${ps.TotalPrice} </h3>
-                                  <h5 class = "card-subtitle mb-2"> ${ps.BrandName}</h5>
-                                    <ul style="list-style-type:none">
-                                  <li class="card-text"><small>Base Price : `+ ps.BasePrice + `</small></li>
-                                  <li class="card-text"><small>Taxes : `+ ps.Taxes + `</small></li>
-                                   <li class="card-text"><small>Fees : `+ ps.Fees + `</small></li>
-                                    </ul>
-                                </div>
-                              </div>
-                            </div>`
-
-            })
-            Pricebody += `</div>`;
-
+            Pricebody = GenerateAirPriceCard(res)
+                
             $("#PriceDetails").append(Pricebody);
 
         }
@@ -532,6 +527,52 @@ function ExecuteAjaxAirPrice(segmts, returnSegments, tierLevel) {
 
         $('#AirPriceDetails').modal('handleUpdate');
     });  
+}
+
+
+function GenerateAirPriceCard(jsonData) {
+    var Pricebody = `<div class="container">`;
+
+    Pricebody += `<div><h4>`;
+    var previous_group = -1;
+    jsonData.flightSegments.forEach(function (segmt) {
+
+        Pricebody += `${segmt.Origin} ➝ ${segmt.Destination} RBD: ${segmt.ClassofService}`
+        if (`${segmt.Group}` != previous_group) {
+            Pricebody += `<br />`;
+        }
+        previous_group = `${segmt.Group}`;
+
+    })
+    Pricebody += `</h4></div>`;
+
+    jsonData.pricingSolutions.forEach(function (ps) {
+        Pricebody += `<div class="mt-1 card-header-custom" style="background-color:#0A121A" >
+                                    <h4>  </h4>
+                                    <h5 class="modal-title text-white"> ${ps.TotalPrice} - ${ps.BrandName}</h5>
+                                </div>
+                                <div class="card-group">
+                                   <div class="card" style="background-color:#F7E4CB">
+                                    <div class="card-block">                                    
+                                        <ul style="list-style-type:none">
+                                          <li class="card-text"><strong>Base Price :</strong> ${ps.BasePrice}</li>
+                                          <li class="card-text"><strong>Taxes :</strong> ${ps.Taxes}</li>
+                                           <li class="card-text"><strong>Fees :</strong> ${ps.Fees}</li></ul>
+                                        <h5 class="ml-2">Brand Services</h5><ul>`;
+
+        for (var i = 0; i < ps.optionalService.length; i++) {
+            Pricebody += `<li class="card-text"><small> ${ps.optionalService[i].Tag}  :  ${ps.optionalService[i].Chargeable}</small></li>`;
+        }
+
+
+        Pricebody += ` </ul></div></div></div>`;
+
+    })
+
+    Pricebody += `</div>`;
+
+    return Pricebody;
+
 }
 
 function ShowModal() {
@@ -797,6 +838,7 @@ function loadAirPriceResults() {
     var selectedSegmts = $("#SelectedFlights").data(`selectedflights`);
     var selectedReturnSegmts = $("#SelectedFlights").data('selectedReturnflights');
     var tierLevel = $("#SelectedFlights").data('selectedflighttier');
+      
 
     if (selectedSegmts != "") {
         ExecuteAjaxAirPrice(selectedSegmts, selectedReturnSegmts, tierLevel);

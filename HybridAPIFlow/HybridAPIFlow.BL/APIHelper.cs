@@ -30,6 +30,13 @@ namespace HybridAPIFlow.BL
         public string Tier { set; get; }
     }
 
+    public class OptionalService
+    {
+        public string Type { set; get; }
+        public string Tag { set; get; }
+        public string Chargeable { set; get; }
+        public string brandAttribute { set; get; }        
+    }
     public class PricingSolution
     {
         public string TotalPrice { set; get; }
@@ -38,6 +45,7 @@ namespace HybridAPIFlow.BL
         public string Fees { set; get; }
         public string BrandName { set; get; }
         public string BrandTier { set; get; }
+        public OptionalService[] optionalService { set; get; }
     }
 
 
@@ -123,9 +131,9 @@ namespace HybridAPIFlow.BL
     {
         private const string ProviderCode = "1G";
         private const string ApplicationName = "JSON-XML-Demo";
-        public static  NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        public static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public static cAjaxResponse ExecuteSearchPlus(string token, string endpoint, string version, string service, 
+        public static cAjaxResponse ExecuteSearchPlus(string token, string endpoint, string version, string service,
             string AccessGroup, string From, string To, string DepartureDate, string returnDate, string Carrier)
         {
             cAjaxResponse ajaxReqResponse = new cAjaxResponse(); // An object to hold the request and response
@@ -138,7 +146,7 @@ namespace HybridAPIFlow.BL
             CatalogProductOfferingsRequestAir offering = new CatalogProductOfferingsRequestAir();
             req.CatalogProductOfferingsRequest = offering;
             offering.MaxNumberOfUpsellsToReturn = 3;
-           
+
 
             PassengerCriteria criteria = new PassengerCriteria("PassengerCriteria");
             criteria.Number = 1;
@@ -198,17 +206,17 @@ namespace HybridAPIFlow.BL
 
             try
             {
+                ajaxReqResponse.Request = JsonConvert.SerializeObject(root, Formatting.Indented);
                 CatalogProductOfferingsResponseWrapper resp = client.Create(root);
 
-
-                ajaxReqResponse.Request = JsonConvert.SerializeObject(root, Formatting.Indented);
                 ajaxReqResponse.offerings = resp.ToJson();
                 ajaxReqResponse.Status = 0; //success
-              
+
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                ajaxReqResponse.offerings = ex.Message;
                 ajaxReqResponse.Status = 1; //Fail
             }
 
@@ -218,7 +226,7 @@ namespace HybridAPIFlow.BL
 
         public static cAjaxResponse ExecuteAirPrice(string BranchId, string xmlUserName, string xmlPassword, string xmlEndpoint, List<FlightSegments> listSegments, string Tier)
         {
-            AirPriceReq airPriceReq = SetUpAirPriceReq(BranchId, listSegments, false, Tier);          
+            AirPriceReq airPriceReq = SetUpAirPriceReq(BranchId, listSegments, false, Tier);
             string xmlRequest = ObjectToXML(airPriceReq);
 
             AirPricePortTypeClient client = new AirPricePortTypeClient("AirPricePort", xmlEndpoint);
@@ -229,16 +237,16 @@ namespace HybridAPIFlow.BL
             try
             {
                 var httpHeaders = ReturnHttpHeader(xmlUserName, xmlPassword);
-                
+
                 //TODO
                 client.Endpoint.EndpointBehaviors.Add(new HttpHeadersEndpointBehavior(httpHeaders));
-               
+
                 AirPriceRsp airPriceRes = client.service(null, airPriceReq);
 
                 response.Status = 0;
                 response.Request = xmlRequest;
                 response.offerings = ObjectToXML(airPriceRes);
-                response.pricingSolutions = ParseAirPriceResponse(airPriceRes,ref listFS);
+                response.pricingSolutions = ParseAirPriceResponse(airPriceRes, ref listFS);
                 response.flightSegments = listFS;
 
 
@@ -252,12 +260,12 @@ namespace HybridAPIFlow.BL
                 response.Status = 1;
                 response.Request = xmlRequest;
                 response.offerings = se.Message.ToString();
-               
+
                 return response;
             }
         }
 
-        private static AirPriceReq SetUpAirPriceReq(string BranchId, List<FlightSegments> pricingSegments, 
+        private static AirPriceReq SetUpAirPriceReq(string BranchId, List<FlightSegments> pricingSegments,
             bool isFareFamilyDisplay, string Tier)
         {
             AirPriceReq priceReq = new AirPriceReq();
@@ -267,23 +275,23 @@ namespace HybridAPIFlow.BL
 
             List<typeBaseAirSegment> itinerarySegments = new List<typeBaseAirSegment>();
 
-            
+
             for (int i = 0; i < pricingSegments.Count; i++)
             {
                 typeBaseAirSegment segment = new typeBaseAirSegment();
                 segment.Group = pricingSegments[i].Group;
                 segment.Origin = pricingSegments[i].Origin;
-                segment.DepartureTime =  pricingSegments[i].DepDate + "T" + pricingSegments[i].DepTime + ":00"; 
+                segment.DepartureTime = pricingSegments[i].DepDate + "T" + pricingSegments[i].DepTime + ":00"; //get proper date
                 segment.Carrier = pricingSegments[i].Carrier;
                 segment.Destination = pricingSegments[i].Destination;
-                segment.ArrivalTime =  pricingSegments[i].ArrivalDate + "T" + pricingSegments[i].ArrivalTime + ":00";
+                segment.ArrivalTime = pricingSegments[i].ArrivalDate + "T" + pricingSegments[i].ArrivalTime + ":00";
                 segment.ProviderCode = "1G";
                 segment.FlightNumber = pricingSegments[i].FlightNumber;
                 segment.ClassOfService = pricingSegments[i].ClassofService;
                 segment.Key = i.ToString();
                 itinerarySegments.Add(segment);
             }
-           
+
 
             itinerary.AirSegment = itinerarySegments.ToArray();
 
@@ -311,20 +319,20 @@ namespace HybridAPIFlow.BL
 
             AirPricingCommand command = new AirPricingCommand()
             {
-            //CabinClass = "Economy"//You can use Economy,PremiumEconomy,Business etc.
+                //CabinClass = "Economy"//You can use Economy,PremiumEconomy,Business etc.
             };
 
-  
-            command.AirSegmentPricingModifiers = new AirSegmentPricingModifiers[pricingSegments.Count]; 
-           
-            
+
+            command.AirSegmentPricingModifiers = new AirSegmentPricingModifiers[pricingSegments.Count];
+
+
             for (int i = 0; i < pricingSegments.Count; i++)
             {
                 command.AirSegmentPricingModifiers[i] = new AirSegmentPricingModifiers();
                 command.AirSegmentPricingModifiers[i].AirSegmentRef = i.ToString();
                 command.AirSegmentPricingModifiers[i].PermittedBookingCodes = new BookingCode[1];
                 command.AirSegmentPricingModifiers[i].PermittedBookingCodes[0] = new BookingCode();
-                command.AirSegmentPricingModifiers[i].BrandTier = Tier; 
+                command.AirSegmentPricingModifiers[i].BrandTier = Tier;
                 command.AirSegmentPricingModifiers[i].PermittedBookingCodes[0].Code = pricingSegments[i].ClassofService;
             }
 
@@ -338,7 +346,7 @@ namespace HybridAPIFlow.BL
 
             return priceReq;
         }
-        
+
         private static void AddPointOfSale(BaseCoreReq req, string appName)
         {
             BillingPointOfSaleInfo billSaleInfo = new BillingPointOfSaleInfo();
@@ -394,7 +402,7 @@ namespace HybridAPIFlow.BL
             return httpHeaders;
         }
 
-        private static List<PricingSolution> ParseAirPriceResponse(AirPriceRsp response,ref List<FlightSegments> airItinerary)
+        private static List<PricingSolution> ParseAirPriceResponse(AirPriceRsp response, ref List<FlightSegments> airItinerary)
         {
             List<PricingSolution> airPricingSolutions = new List<PricingSolution>();
             PricingSolution PricingSolution;
@@ -403,7 +411,7 @@ namespace HybridAPIFlow.BL
 
             try
             {
-                if(response.AirItinerary.AirSegment.Length>0)
+                if (response.AirItinerary.AirSegment.Length > 0)
                 {
                     foreach (typeBaseAirSegment segment in response.AirItinerary.AirSegment)
                     {
@@ -422,12 +430,12 @@ namespace HybridAPIFlow.BL
                 }
 
 
-            if (response.AirPriceResult[0].AirPricingSolution.Length > 0)
+                if (response.AirPriceResult[0].AirPricingSolution.Length > 0)
                 {
-                   
-                    foreach ( AirPricingSolution ps in response.AirPriceResult[0].AirPricingSolution)
-                        {
-                        
+
+                    foreach (AirPricingSolution ps in response.AirPriceResult[0].AirPricingSolution)
+                    {
+
                         PricingSolution = new PricingSolution();
                         PricingSolution.TotalPrice = ps.TotalPrice;
                         PricingSolution.BasePrice = ps.BasePrice;
@@ -435,15 +443,23 @@ namespace HybridAPIFlow.BL
                         PricingSolution.Fees = ps.Fees;
                         PricingSolution.BrandName = ps.AirPricingInfo[0].FareInfo[0].Brand.Name;
                         PricingSolution.BrandTier = ps.AirPricingInfo[0].FareInfo[0].Brand.BrandTier;
+                        PricingSolution.optionalService = new OptionalService[ps.AirPricingInfo[0].FareInfo[0].Brand.OptionalServices.OptionalService.Length];
 
+                        for (int l = 0; l < ps.AirPricingInfo[0].FareInfo[0].Brand.OptionalServices.OptionalService.Length; l++)
+                        {
+
+                            PricingSolution.optionalService[l] = new OptionalService
+                            {
+                                Type = ps.AirPricingInfo[0].FareInfo[0].Brand.OptionalServices.OptionalService[l].Type,
+                                Tag = ps.AirPricingInfo[0].FareInfo[0].Brand.OptionalServices.OptionalService[l].Tag,
+                                Chargeable = ps.AirPricingInfo[0].FareInfo[0].Brand.OptionalServices.OptionalService[l].Chargeable                               
+                            };
+                        }
                         airPricingSolutions.Add(PricingSolution);
-
                     }
-
-
                 }
             }
-            catch(Exception se)
+            catch (Exception se)
             {
                 var msg = se.Message;
             }
